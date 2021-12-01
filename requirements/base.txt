@@ -1,1 +1,4 @@
 requests==2.26.0
+pydantic==1.8.2
+aiohttp==3.8.1
+cchardet==2.1.7
