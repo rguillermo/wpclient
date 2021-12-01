@@ -27,6 +27,7 @@ services:
           define( 'SCRIPT_DEBUG', true );
     volumes:
       - wpclient:/var/www/html
+      - ./.htaccess:/var/www/html/.htaccess
     depends_on:
       - db
       - mailhog
