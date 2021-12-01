@@ -1,0 +1,14 @@
+{
+    "name": "wpclient",
+    "license": "MIT",
+    "scripts": {
+        "up": "cd wordpress && docker-compose up -d",
+        "down": "cd wordpress && docker-compose down",
+        "ps": "cd wordpress && docker-compose ps",
+        "logs": "cd wordpress && docker-compose logs",
+        "volumerm": "docker volume rm wordpress_wpclient wordpress_wpclient_dbdata",
+        "build": "cd wordpress && docker-compose build",
+        "reset": "yarn down && yarn volumerm && yarn build && yarn up",
+        "bash": "cd wordpress && docker-compose exec wp bash"
+    }
+}
