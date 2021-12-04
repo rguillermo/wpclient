@@ -25,6 +25,8 @@ services:
           define( 'WP_DEBUG_LOG', true );
           define('FS_METHOD', 'direct');
           define( 'SCRIPT_DEBUG', true );
+          define('JWT_AUTH_SECRET_KEY', 'iR4CszAW5bezwud');
+          define('JWT_AUTH_CORS_ENABLE', true);
     volumes:
       - wpclient:/var/www/html
       - ./.htaccess:/var/www/html/.htaccess
