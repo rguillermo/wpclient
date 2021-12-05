@@ -16,7 +16,7 @@ WP Client
 
 
 
-WordPress REST API client written in Python
+WordPress REST API client with async support
 
 
 * Free software: MIT license
@@ -26,12 +26,6 @@ WordPress REST API client written in Python
 Features
 --------
 
-* TODO
-
-Credits
--------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+- Basic and JWT authentication
+- Sync and async operation
+- Full CRUD support for Posts, Pages, Media, Categories and Tags endpoints
