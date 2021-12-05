@@ -4,34 +4,42 @@
 
 import pytest
 
-from click.testing import CliRunner
-
-from wpclient import wpclient
-from wpclient import cli
+from wpclient.api.sync.client import WPAPI
+from wpclient.api.sync.posts import Posts
+from wpclient.api.sync.categories import Categories
 
 
 @pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+def auth_data():
+    return {
+        'wp_url': 'http://127.0.0.1:8000/',
+        'wp_username': 'admin',
+        'wp_password': 'admin'
+    }
 
 
-def test_command_line_interface():
-    """Test the CLI."""
-    runner = CliRunner()
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-    assert 'wpclient.cli.main' in result.output
-    help_result = runner.invoke(cli.main, ['--help'])
-    assert help_result.exit_code == 0
-    assert '--help  Show this message and exit.' in help_result.output
+
+def test_wpapi_can_instantiate(auth_data):
+    api = WPAPI(**auth_data)
+    assert isinstance(api, WPAPI)
+
+
+def test_wpapi_lazy_endpoints(auth_data):
+    api = WPAPI(**auth_data)
+    assert hasattr(api, 'posts')
+    assert hasattr(api, 'categories')
+    assert isinstance(api.posts, Posts)
+    assert isinstance(api.categories, Categories)
+
+
+def test_wpapi_raise_exception_on_not_registered_endpoint(auth_data):
+    api = WPAPI(**auth_data)
+    with pytest.raises(AttributeError):
+        api.bad_endpoint
+
+
+def test_wpapi_reusing_crud_instance(auth_data):
+    api = WPAPI(**auth_data)
+    assert api.posts._session is api.categories._session
+    assert api.posts._session.auth is api.categories._session.auth
+
